@@ -5,7 +5,7 @@ class Board
   attr_accessor :game_board
 
   def initialize
-    @game_board = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+    @game_board = [%w[1 2 3], %w[4 5 6], %w[7 8 9]]
   end
 
   def board_search(position)
@@ -34,4 +34,4 @@ class Board
 end
 
 my_board = Board.new
-p my_board.place_marker('X', 7)
+p my_board.board_search('7')
