@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'pry-byebug'
 require_relative('player')
 require_relative('board')
 
@@ -14,8 +15,9 @@ class Game
 
   def play_round(player)
     @game_board.print_board
-    player_input = player.sanitize_input.to_i
-    @game_board.place_marker(player.marker, player_input)
+    player_input = player.take_input
+    sanitized_input = validate_input(player_input, player)
+    @game_board.place_marker(player.marker, sanitized_input)
   end
 
   def play_game
@@ -58,6 +60,19 @@ class Game
     [array_to_check[2], array_to_check[4], array_to_check[6]].all? do |element|
       element == token
     end
+  end
+
+  def validate_input(input, player)
+    return input if @game_board.game_board.flatten.include?(input)
+
+    is_valid = false
+    correct_input = ''
+    until is_valid
+      retry_input = player.take_input(player.error_query)
+      is_valid = @game_board.game_board.flatten.include?(retry_input)
+      correct_input = retry_input
+    end
+    correct_input
   end
 end
 
