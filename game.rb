@@ -23,7 +23,7 @@ class Game
   def play_game
     until @game_over
       play_round(@player_one)
-      @game_over = check_for_win(@game_board.game_board, 'X')
+      @game_over = check_for_win(@game_board.game_board, 'X') || @game_board.check_full_board
       break if @game_over
 
       play_round(@player_two)
@@ -77,4 +77,3 @@ class Game
 end
 
 # new_game = Game.new
-# p new_game.check_for_win([['X', 2, 'X'], [4, 'X', 6], ['X', 8, 'X']], 'X')
