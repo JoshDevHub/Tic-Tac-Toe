@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # board.rb
 class Board
   def initialize
@@ -8,6 +10,11 @@ class Board
     row_position = @game_board.index { |array| array.include?(position) }
     col_position = @game_board[row_position].index(position)
     [row_position, col_position]
+  end
+
+  def place_marker(marker, position)
+    board_coords = board_search(position)
+    @game_board[board_coords[0]][board_coords[1]] = marker
   end
 
   def get_row_string(row)
@@ -25,4 +32,4 @@ class Board
 end
 
 my_board = Board.new
-my_board.print_board
+p my_board.place_marker('X', 7)
