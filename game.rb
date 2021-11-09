@@ -6,11 +6,15 @@ require_relative('board')
 
 # game.rb
 class Game
+  attr_reader :player_one, :player_two
+  attr_accessor :winner
+
   def initialize
     @player_one = Player.new('X')
     @player_two = Player.new('O')
     @game_board = Board.new
     @game_over = false
+    @winner = nil
   end
 
   def play_round(player)
@@ -23,11 +27,13 @@ class Game
   def play_game
     until @game_over
       play_round(@player_one)
-      @game_over = check_for_win(@game_board.game_board, 'X') || @game_board.check_full_board
+      @player_one.winner = check_for_win(@game_board.game_board, 'X')
+      @game_over = @player_one.winner || @game_board.check_full_board
       break if @game_over
 
       play_round(@player_two)
-      @game_over = check_for_win(@game_board.game_board, 'O')
+      @player_two.winner = check_for_win(@game_board.game_board, 'O')
+      @game_over = @player_two.winner
     end
   end
 
@@ -74,6 +80,13 @@ class Game
     end
     correct_input
   end
+
+  def determine_winner
+    # binding.pry
+    @winner = 'Player 1' if @player_one.winner
+    @winner = 'Player 2' if @player_two.winner
+  end
 end
 
 # new_game = Game.new
+# new_game.determine_winner
