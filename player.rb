@@ -4,7 +4,8 @@
 class Player
   attr_reader :default_query, :error_query
 
-  def initialize
+  def initialize(marker)
+    @marker = marker
     @default_query = 'What is your choice?'
     @error_query = 'Your choice was invalid. Please pick a valid board position.'
   end
