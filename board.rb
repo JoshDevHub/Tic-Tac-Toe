@@ -19,6 +19,10 @@ class Board
     @game_board[board_coords[0]][board_coords[1]] = marker
   end
 
+  def check_full_board
+    @game_board.flatten.all? { |square| %w[X O].include?(square) }
+  end
+
   def get_row_string(row)
     " #{@game_board[row][0]} | #{@game_board[row][1]} | #{@game_board[row][2]}"
   end
@@ -34,4 +38,4 @@ class Board
 end
 
 my_board = Board.new
-p my_board.board_search('7')
+p my_board.check_full_board
