@@ -10,8 +10,8 @@ class Game
   attr_accessor :winner
 
   def initialize
-    @player_one = Player.new('X')
-    @player_two = Player.new('O')
+    @player_one = Player.new('X', 'Player 1')
+    @player_two = Player.new('O', 'Player 2')
     @game_board = Board.new
     @game_over = false
     @winner = nil
@@ -19,7 +19,8 @@ class Game
 
   def play_round(player)
     @game_board.print_board
-    player_input = player.take_input
+    query = "#{player.name}: What is your choice?"
+    player_input = player.take_input(query)
     sanitized_input = validate_input(player_input, player)
     @game_board.place_marker(player.marker, sanitized_input)
   end
@@ -87,6 +88,3 @@ class Game
     @winner = 'Player 2' if @player_two.winner
   end
 end
-
-# new_game = Game.new
-# new_game.determine_winner

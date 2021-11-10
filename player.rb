@@ -2,17 +2,17 @@
 
 # player.rb
 class Player
-  attr_reader :marker, :error_query
+  attr_reader :marker, :error_query, :name
   attr_accessor :winner
 
-  def initialize(marker)
-    @winner = false
+  def initialize(marker, name)
+    @name = name
     @marker = marker
-    @default_query = 'What is your choice?'
     @error_query = 'Your choice was invalid. Please pick a valid board position.'
+    @winner = false
   end
 
-  def take_input(query = @default_query)
+  def take_input(query)
     puts query
     gets.chomp
   end
