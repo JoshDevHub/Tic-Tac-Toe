@@ -22,7 +22,7 @@ class Game
     query = "#{player.name}: What is your choice?"
     player_input = player.take_input(query)
     sanitized_input = validate_input(player_input, player)
-    @game_board.place_marker(player.marker, sanitized_input)
+    @game_board.place_token(player.token, sanitized_input)
   end
 
   def play_game

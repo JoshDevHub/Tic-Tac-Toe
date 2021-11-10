@@ -14,9 +14,9 @@ class Board
     [row_position, col_position]
   end
 
-  def place_marker(marker, position)
+  def place_token(token, position)
     board_coords = board_search(position)
-    @game_board[board_coords[0]][board_coords[1]] = marker
+    @game_board[board_coords[0]][board_coords[1]] = token
   end
 
   def check_full_board

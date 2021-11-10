@@ -2,12 +2,12 @@
 
 # player.rb
 class Player
-  attr_reader :marker, :name
+  attr_reader :token, :name
   attr_accessor :winner
 
-  def initialize(marker, name)
+  def initialize(token, name)
     @name = name
-    @marker = marker
+    @token = token
     @winner = false
   end
 
