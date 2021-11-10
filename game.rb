@@ -6,7 +6,6 @@ require_relative('board')
 
 # game.rb
 class Game
-  attr_reader :player_one, :player_two
   attr_accessor :winner
 
   def initialize
@@ -28,19 +27,19 @@ class Game
   def play_game
     until @game_over
       play_round(@player_one)
-      @player_one.winner = check_for_win(@game_board.game_board, 'X')
+      @player_one.winner = check_for_win('X')
       @game_over = @player_one.winner || @game_board.check_full_board
       break if @game_over
 
       play_round(@player_two)
-      @player_two.winner = check_for_win(@game_board.game_board, 'O')
+      @player_two.winner = check_for_win('O')
       @game_over = @player_two.winner
     end
   end
 
-  def check_for_win(nest_array, token)
-    check_row_win(nest_array, token) || check_col_win(nest_array, token) ||
-      check_first_diagonal_win(nest_array, token) || check_second_diagonal_win(nest_array, token)
+  def check_for_win(token)
+    @game_board.check_row_win(token) || @game_board.check_col_win(token) ||
+      @game_board.check_primary_diagonal_win(token) || @game_board.check_secondary_diagonal_win(token)
   end
 
   def check_row_win(nest_array, token)

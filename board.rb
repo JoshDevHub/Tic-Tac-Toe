@@ -19,6 +19,29 @@ class Board
     @game_board[board_coords[0]][board_coords[1]] = token
   end
 
+  def check_row_win(token)
+    @game_board.any? do |array|
+      array.all? { |square| square == token }
+    end
+  end
+
+  def check_col_win(token)
+    @game_board.transpose.any? do |array|
+      array.all? { |square| square == token }
+    end
+  end
+
+  def check_primary_diagonal_win(token)
+    diagonal_map = @game_board.map.with_index { |array, index| array[index] }
+    diagonal_map.all? { |square| square == token }
+  end
+
+  def check_secondary_diagonal_win(token)
+    diagonal_index = 3
+    diagonal_map = @game_board.map { |array| array[diagonal_index -= 1] }
+    diagonal_map.all? { |square| square == token }
+  end
+
   def check_full_board
     @game_board.flatten.all? { |square| %w[X O].include?(square) }
   end
