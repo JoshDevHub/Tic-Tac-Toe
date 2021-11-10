@@ -83,7 +83,6 @@ class Game
   end
 
   def determine_winner
-    # binding.pry
     @winner = 'Player 1' if @player_one.winner
     @winner = 'Player 2' if @player_two.winner
   end
