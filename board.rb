@@ -29,13 +29,12 @@ class Board
 
   def print_board
     separator = '---+---+---'
+    puts
     puts get_row_string(0)
     puts separator
     puts get_row_string(1)
     puts separator
     puts get_row_string(2)
+    puts
   end
 end
-
-my_board = Board.new
-p my_board.check_full_board
