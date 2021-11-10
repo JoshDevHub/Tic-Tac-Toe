@@ -8,7 +8,6 @@ class Player
   def initialize(marker, name)
     @name = name
     @marker = marker
-    @error_query = 'Your choice was invalid. Please pick a valid board position.'
     @winner = false
   end
 

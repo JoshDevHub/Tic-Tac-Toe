@@ -73,9 +73,10 @@ class Game
     return input if @game_board.game_board.flatten.include?(input)
 
     is_valid = false
+    error_query = 'Your choice was invalid. Please pick a valid board position.'
     correct_input = ''
     until is_valid
-      retry_input = player.take_input(player.error_query)
+      retry_input = player.take_input(error_query)
       is_valid = @game_board.game_board.flatten.include?(retry_input)
       correct_input = retry_input
     end
