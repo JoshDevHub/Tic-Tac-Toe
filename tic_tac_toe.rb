@@ -14,7 +14,7 @@ loop do
   when 'Player 1'
     puts "Congratulations Player 1! You've won the game"
   when 'Player 2'
-    puts "Congratulations Plyaer 2! You've won the game"
+    puts "Congratulations Player 2! You've won the game"
   else
     puts 'This game was a draw'
   end
