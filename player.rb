@@ -2,7 +2,7 @@
 
 # player.rb
 class Player
-  attr_reader :marker, :error_query, :name
+  attr_reader :marker, :name
   attr_accessor :winner
 
   def initialize(marker, name)
