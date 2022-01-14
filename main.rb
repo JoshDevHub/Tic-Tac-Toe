@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative('game')
+require_relative('lib/game')
 
 loop do
   new_game = Game.new
