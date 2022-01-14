@@ -28,6 +28,14 @@ describe Board do # rubocop: disable Metrics/BlockLength
   describe '#place_token' do # rubocop: disable Metrics/BlockLength
     subject(:playing_board) { Board.new }
 
+    it 'sends board_search to self containing position 1 and return board coordinates [0, 0]' do
+      position = 1
+      token = 'X'
+      expected_coordinates = [0, 0]
+      expect(playing_board).to receive(:board_search).with(position).and_return(expected_coordinates)
+      playing_board.place_token(token, position)
+    end
+
     context 'places a token on the first position on the board' do
       position = 1
       before do
