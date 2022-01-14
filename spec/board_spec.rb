@@ -71,5 +71,31 @@ describe Board do # rubocop: disable Metrics/BlockLength
     end
   end
 
-  describe '#win-condition'
+  describe '#win?' do
+    context 'when no win condition has been met' do
+      it 'returns false when the board is empty' do
+        # placeholder
+      end
+      it 'returns false when the board is full with no tokens forming a row' do
+        # placeholder
+      end
+      it 'returns false with a partially full board and no tokens forming a row' do
+        # placeholder
+      end
+    end
+    context 'when a win condition has been met' do
+      it 'returns true when a row is filled with the same token' do
+        # placeholder
+      end
+      it 'returns true when a column is filled with the same token' do
+        # placeholder
+      end
+      it 'returns true when the main diagonal is filled with the same token' do
+        # placeholder
+      end
+      it 'returns true when the anti diagonal is filled with the same token' do
+        # placeholder
+      end
+    end
+  end
 end
