@@ -24,8 +24,8 @@ class Board
   end
 
   def place_token(token, position)
-    board_coords = board_search(position)
-    game_board[board_coords[0]][board_coords[1]] = token
+    x_pos, y_pos = board_search(position)
+    game_board[x_pos][y_pos] = token
   end
 
   def check_win_condition(token)
