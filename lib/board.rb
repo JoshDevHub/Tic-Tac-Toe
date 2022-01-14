@@ -19,7 +19,7 @@ class Board
     puts
   end
 
-  def check_full_board
+  def full_board?
     game_board.flatten.all? { |square| %w[X O].include?(square) }
   end
 
