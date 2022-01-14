@@ -70,4 +70,6 @@ describe Board do # rubocop: disable Metrics/BlockLength
       end
     end
   end
+
+  describe '#win-condition'
 end

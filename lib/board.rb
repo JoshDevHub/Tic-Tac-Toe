@@ -28,9 +28,9 @@ class Board
     game_board[x_pos][y_pos] = token
   end
 
-  def check_win_condition(token)
-    check_row_win(token) || check_col_win(token) || check_main_diagonal_win(token) ||
-      check_anti_diagonal_win(token)
+  def win?(token)
+    row_win?(token) || col_win?(token) || main_diagonal_win?(token) ||
+      anti_diagonal_win?(token)
   end
 
   private
@@ -45,24 +45,24 @@ class Board
     [row_position, col_position]
   end
 
-  def check_row_win(token)
+  def row_win?(token)
     game_board.any? do |array|
       array.all? { |square| square == token }
     end
   end
 
-  def check_col_win(token)
+  def col_win?(token)
     game_board.transpose.any? do |array|
       array.all? { |square| square == token }
     end
   end
 
-  def check_main_diagonal_win(token)
+  def main_diagonal_win?(token)
     diagonal_map = game_board.map.with_index { |array, index| array[index] }
     diagonal_map.all? { |square| square == token }
   end
 
-  def check_anti_diagonal_win(token)
+  def anti_diagonal_win?(token)
     diagonal_index = 3
     diagonal_map = game_board.map { |array| array[diagonal_index -= 1] }
     diagonal_map.all? { |square| square == token }
