@@ -26,44 +26,13 @@ class Game
   def play_game
     until @game_over
       play_round(@player_one)
-      @player_one.winner = check_for_win('X')
+      @player_one.winner = @game_board.check_win_condition('X')
       @game_over = @player_one.winner || @game_board.check_full_board
       break if @game_over
 
       play_round(@player_two)
-      @player_two.winner = check_for_win('O')
+      @player_two.winner = @game_board.check_win_condition('O')
       @game_over = @player_two.winner
-    end
-  end
-
-  def check_for_win(token)
-    @game_board.check_row_win(token) || @game_board.check_col_win(token) ||
-      @game_board.check_primary_diagonal_win(token) || @game_board.check_secondary_diagonal_win(token)
-  end
-
-  def check_row_win(nest_array, token)
-    nest_array.any? do |array|
-      array.all? { |element| element == token }
-    end
-  end
-
-  def check_col_win(nest_array, token)
-    nest_array.all? { |array| array[0] == token } ||
-      nest_array.all? { |array| array[1] == token } ||
-      nest_array.all? { |array| array[2] == token }
-  end
-
-  def check_first_diagonal_win(nest_array, token)
-    array_to_check = nest_array.flatten
-    [array_to_check[0], array_to_check[4], array_to_check[8]].all? do |element|
-      element == token
-    end
-  end
-
-  def check_second_diagonal_win(nest_array, token)
-    array_to_check = nest_array.flatten
-    [array_to_check[2], array_to_check[4], array_to_check[6]].all? do |element|
-      element == token
     end
   end
 
