@@ -88,8 +88,15 @@ describe Board do # rubocop: disable Metrics/BlockLength
         allow(playing_board).to receive(:game_board).and_return(drawn_board)
         expect(playing_board.win?(token)).to be(false)
       end
-      xit 'returns false with a partially full board and no tokens forming a row' do
-        # placeholder
+      it 'returns false with a partially full board and no tokens forming a row' do
+        partial_board = [
+          %w[X 0 0],
+          %w[4 X 6],
+          %w[7 8 9]
+        ]
+        token = 'X'
+        allow(playing_board).to receive(:game_board).and_return(partial_board)
+        expect(playing_board.win?(token)).to be(false)
       end
     end
     context 'when a win condition has been met' do
