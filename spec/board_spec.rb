@@ -13,13 +13,13 @@ describe Board do # rubocop: disable Metrics/BlockLength
     end
 
     it 'returns false when some tokens are on the board' do
-      partial_board = playing_board.game_board.each { |row| row[0] = 'X' }
+      partial_board = playing_board.game_board.each { |row| row[0] = 'X' } # TODO: better intention
       allow(playing_board).to receive(:game_board).and_return(partial_board)
       expect(playing_board.full_board?).to eq(false)
     end
 
     it 'returns true when the board is full of tokens' do
-      full_board = playing_board.game_board.map { |row| row.map { |_square| 'X' } }
+      full_board = playing_board.game_board.map { |row| row.map { |_square| 'X' } } # TODO: better intention
       allow(playing_board).to receive(:game_board).and_return(full_board)
       expect(playing_board.full_board?).to eq(true)
     end
@@ -71,29 +71,38 @@ describe Board do # rubocop: disable Metrics/BlockLength
     end
   end
 
-  describe '#win?' do
+  describe '#win?' do # rubocop: disable Metrics/BlockLength
+    subject(:playing_board) { Board.new }
     context 'when no win condition has been met' do
       it 'returns false when the board is empty' do
-        # placeholder
+        token = 'X'
+        expect(playing_board.win?(token)).to be(false)
       end
       it 'returns false when the board is full with no tokens forming a row' do
-        # placeholder
+        drawn_board = [
+          %w[X O O],
+          %w[O X X],
+          %w[O X O]
+        ]
+        token = 'O'
+        allow(playing_board).to receive(:game_board).and_return(drawn_board)
+        expect(playing_board.win?(token)).to be(false)
       end
-      it 'returns false with a partially full board and no tokens forming a row' do
+      xit 'returns false with a partially full board and no tokens forming a row' do
         # placeholder
       end
     end
     context 'when a win condition has been met' do
-      it 'returns true when a row is filled with the same token' do
+      xit 'returns true when a row is filled with the same token' do
         # placeholder
       end
-      it 'returns true when a column is filled with the same token' do
+      xit 'returns true when a column is filled with the same token' do
         # placeholder
       end
-      it 'returns true when the main diagonal is filled with the same token' do
+      xit 'returns true when the main diagonal is filled with the same token' do
         # placeholder
       end
-      it 'returns true when the anti diagonal is filled with the same token' do
+      xit 'returns true when the anti diagonal is filled with the same token' do
         # placeholder
       end
     end
