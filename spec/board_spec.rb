@@ -81,11 +81,13 @@ describe Board do # rubocop: disable Metrics/BlockLength
 
   describe '#win?' do # rubocop: disable Metrics/BlockLength
     subject(:playing_board) { Board.new }
+
     context 'when no win condition has been met' do
       it 'returns false when the board is empty' do
         token = 'X'
         expect(playing_board.win?(token)).to be(false)
       end
+
       it 'returns false when the board is full with no tokens forming a row' do
         drawn_board = [
           %w[X O O],
@@ -96,6 +98,7 @@ describe Board do # rubocop: disable Metrics/BlockLength
         allow(playing_board).to receive(:game_board).and_return(drawn_board)
         expect(playing_board.win?(token)).to be(false)
       end
+
       it 'returns false with a partially full board and no tokens forming a row' do
         partial_board = [
           %w[X 0 0],
@@ -107,6 +110,7 @@ describe Board do # rubocop: disable Metrics/BlockLength
         expect(playing_board.win?(token)).to be(false)
       end
     end
+
     context 'when a win condition has been met' do # rubocop: disable Metrics/BlockLength
       it 'returns true when a row is filled with the same token' do
         row_win_board = [
@@ -118,6 +122,7 @@ describe Board do # rubocop: disable Metrics/BlockLength
         allow(playing_board).to receive(:game_board).and_return(row_win_board)
         expect(playing_board.win?(token)).to be(true)
       end
+
       it 'returns true when a column is filled with the same token' do
         col_win_board = [
           %w[X 2 O],
@@ -128,6 +133,7 @@ describe Board do # rubocop: disable Metrics/BlockLength
         allow(playing_board).to receive(:game_board).and_return(col_win_board)
         expect(playing_board.win?(token)).to be(true)
       end
+
       it 'returns true when the main diagonal is filled with the same token' do
         main_diagonal_win_board = [
           %w[X O 3],
@@ -138,6 +144,7 @@ describe Board do # rubocop: disable Metrics/BlockLength
         allow(playing_board).to receive(:game_board).and_return(main_diagonal_win_board)
         expect(playing_board.win?(token)).to be(true)
       end
+
       it 'returns true when the anti diagonal is filled with the same token' do
         anti_diagonal_win_board = [
           %w[X X O],
