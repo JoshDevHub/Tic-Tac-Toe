@@ -100,8 +100,15 @@ describe Board do # rubocop: disable Metrics/BlockLength
       end
     end
     context 'when a win condition has been met' do
-      xit 'returns true when a row is filled with the same token' do
-        # placeholder
+      it 'returns true when a row is filled with the same token' do
+        row_win_board = [
+          %w[0 O O],
+          %w[X X X],
+          %w[7 8 9]
+        ]
+        token = 'X'
+        allow(playing_board).to receive(:game_board).and_return(row_win_board)
+        expect(playing_board.win?(token)).to be(true)
       end
       xit 'returns true when a column is filled with the same token' do
         # placeholder
