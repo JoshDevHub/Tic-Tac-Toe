@@ -13,7 +13,11 @@ describe Board do # rubocop: disable Metrics/BlockLength
     end
 
     it 'returns false when some tokens are on the board' do
-      partial_board = playing_board.game_board.each { |row| row[0] = 'X' } # TODO: better intention
+      partial_board = [
+        %w[X 2 3],
+        %w[X 5 6],
+        %w[X 8 9]
+      ]
       allow(playing_board).to receive(:game_board).and_return(partial_board)
       expect(playing_board.full_board?).to eq(false)
     end
