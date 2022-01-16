@@ -15,14 +15,6 @@ class Game
     @winner = nil
   end
 
-  def play_round(player)
-    @game_board.print_board
-    query = "#{player.name}: What is your choice?"
-    player_input = player.take_input(query)
-    sanitized_input = validate_input(player_input, player)
-    @game_board.place_token(player.token, sanitized_input)
-  end
-
   def play_game
     until @game_over
       play_round(@player_one)
@@ -34,6 +26,16 @@ class Game
       @player_two.winner = @game_board.check_win_condition('O')
       @game_over = @player_two.winner
     end
+  end
+
+  private
+
+  def play_round(player)
+    @game_board.print_board
+    query = "#{player.name}: What is your choice?"
+    player_input = player.take_input(query)
+    sanitized_input = validate_input(player_input, player)
+    @game_board.place_token(player.token, sanitized_input)
   end
 
   def validate_input(input, player)
