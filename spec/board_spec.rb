@@ -23,7 +23,11 @@ describe Board do # rubocop: disable Metrics/BlockLength
     end
 
     it 'returns true when the board is full of tokens' do
-      full_board = playing_board.game_board.map { |row| row.map { |_square| 'X' } } # TODO: better intention
+      full_board = [
+        %w[X O X],
+        %w[O X O],
+        %w[X O X]
+      ]
       allow(playing_board).to receive(:game_board).and_return(full_board)
       expect(playing_board.full_board?).to eq(true)
     end
