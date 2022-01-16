@@ -110,8 +110,15 @@ describe Board do # rubocop: disable Metrics/BlockLength
         allow(playing_board).to receive(:game_board).and_return(row_win_board)
         expect(playing_board.win?(token)).to be(true)
       end
-      xit 'returns true when a column is filled with the same token' do
-        # placeholder
+      it 'returns true when a column is filled with the same token' do
+        col_win_board = [
+          %w[X 2 O],
+          %w[X X O],
+          %w[O X O]
+        ]
+        token = 'O'
+        allow(playing_board).to receive(:game_board).and_return(col_win_board)
+        expect(playing_board.win?(token)).to be(true)
       end
       xit 'returns true when the main diagonal is filled with the same token' do
         # placeholder
