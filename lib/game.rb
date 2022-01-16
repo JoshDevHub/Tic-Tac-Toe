@@ -17,24 +17,30 @@ class Game
   end
 
   def play_game
-    until game_over
+    until game_over?
       play_round(player_one)
-      player_one.winner = game_board.win?('X')
-      self.game_over = player_one.winner || game_board.full_board?
-      break if game_over
+      break if game_over?
 
       play_round(player_two)
-      player_two.winner = game_board.win?('O')
-      self.game_over = player_two.winner
+    end
+    puts determine_result
+  end
+
+  def determine_result
+    if game_board.full_board?
+      'This game was a draw.'
+    elsif game_board.win?('X')
+      "Congratulations Player 1! You've won the game"
+    else
+      "Congratulations Player 2! You've won the game"
     end
   end
 
-  def determine_winner
-    self.winner = 'Player 1' if player_one.winner
-    self.winner = 'Player 2' if player_two.winner
-  end
-
   private
+
+  def game_over?
+    game_board.win?('X') || game_board.win?('O') || game_board.full_board?
+  end
 
   def play_round(player)
     game_board.print_board
