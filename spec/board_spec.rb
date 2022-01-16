@@ -99,7 +99,7 @@ describe Board do # rubocop: disable Metrics/BlockLength
         expect(playing_board.win?(token)).to be(false)
       end
     end
-    context 'when a win condition has been met' do
+    context 'when a win condition has been met' do # rubocop: disable Metrics/BlockLength
       it 'returns true when a row is filled with the same token' do
         row_win_board = [
           %w[0 O O],
@@ -120,11 +120,25 @@ describe Board do # rubocop: disable Metrics/BlockLength
         allow(playing_board).to receive(:game_board).and_return(col_win_board)
         expect(playing_board.win?(token)).to be(true)
       end
-      xit 'returns true when the main diagonal is filled with the same token' do
-        # placeholder
+      it 'returns true when the main diagonal is filled with the same token' do
+        main_diagonal_win_board = [
+          %w[X O 3],
+          %w[O X O],
+          %w[7 8 X]
+        ]
+        token = 'X'
+        allow(playing_board).to receive(:game_board).and_return(main_diagonal_win_board)
+        expect(playing_board.win?(token)).to be(true)
       end
-      xit 'returns true when the anti diagonal is filled with the same token' do
-        # placeholder
+      it 'returns true when the anti diagonal is filled with the same token' do
+        anti_diagonal_win_board = [
+          %w[X X O],
+          %w[X O 6],
+          %w[O 8 9]
+        ]
+        token = 'O'
+        allow(playing_board).to receive(:game_board).and_return(anti_diagonal_win_board)
+        expect(playing_board.win?(token)).to be(true)
       end
     end
   end
