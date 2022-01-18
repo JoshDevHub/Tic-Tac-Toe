@@ -5,8 +5,8 @@
 require './lib/game'
 
 describe Game do
+  subject(:tic_tac_toe) { described_class.new }
   describe '#play_game' do
-    subject(:tic_tac_toe) { described_class.new }
     context 'when players play two games' do
       before do
         allow(tic_tac_toe).to receive(:game_over?).and_return(true)
@@ -30,9 +30,5 @@ describe Game do
         tic_tac_toe.play_game
       end
     end
-  end
-
-  describe '#determine_result' do
-    # placeholder
   end
 end
