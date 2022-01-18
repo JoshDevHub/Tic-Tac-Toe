@@ -5,6 +5,11 @@
 require './lib/game'
 
 describe Game do
-  
-end
+  describe '#play_game' do
+    # placeholder
+  end
 
+  describe '#determine_result' do
+    # placeholder
+  end
+end
