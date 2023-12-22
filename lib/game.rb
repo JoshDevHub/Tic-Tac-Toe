@@ -1,15 +1,12 @@
-# frozen_string_literal: true
+require_relative("player")
+require_relative("board")
 
-require_relative('player')
-require_relative('board')
-
-# game.rb
 class Game
   attr_reader :player_one, :player_two, :game_board
 
   def initialize
-    @player_one = Player.new('X', 'Player 1')
-    @player_two = Player.new('O', 'Player 2')
+    @player_one = Player.new("X", "Player 1")
+    @player_two = Player.new("O", "Player 2")
   end
 
   def play_game
@@ -43,13 +40,13 @@ class Game
   end
 
   def game_over?
-    game_board.win?('X') || game_board.win?('O') || game_board.full_board?
+    game_board.win?("X") || game_board.win?("O") || game_board.full_board?
   end
 
   def determine_result
     if game_board.full_board?
-      'This game was a draw.'
-    elsif game_board.win?('X')
+      "This game was a draw."
+    elsif game_board.win?("X")
       "Congratulations Player 1! You've won the game"
     else
       "Congratulations Player 2! You've won the game"
@@ -65,17 +62,17 @@ class Game
   end
 
   def play_again?
-    puts 'Would you like to play again? Y/n'
+    puts "Would you like to play again? Y/n"
     response = gets.chomp.downcase
-    response == 'y'
+    response == "y"
   end
 
   def validate_input(input, player)
     return input if game_board.game_board.flatten.include?(input)
 
     is_valid = false
-    error_query = 'Your choice was invalid. Please pick a valid board position.'
-    correct_input = ''
+    error_query = "Your choice was invalid. Please pick a valid board position."
+    correct_input = ""
     until is_valid
       retry_input = player.take_input(error_query)
       is_valid = game_board.game_board.flatten.include?(retry_input)

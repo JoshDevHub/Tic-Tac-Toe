@@ -1,6 +1,3 @@
-# frozen_string_literal: true
-
-# board.rb
 class Board
   attr_accessor :game_board
 
@@ -8,8 +5,10 @@ class Board
     @game_board = [%w[1 2 3], %w[4 5 6], %w[7 8 9]]
   end
 
+  SYMBOLS = %w[X O].freeze
+
   def print_board
-    separator = '---+---+---'
+    separator = "---+---+---"
     puts
     puts get_row_string(0)
     puts separator
@@ -20,7 +19,7 @@ class Board
   end
 
   def full_board?
-    game_board.flatten.all? { |square| %w[X O].include?(square) }
+    game_board.flatten.all? { |square| SYMBOLS.include?(square) }
   end
 
   def place_token(token, position)
@@ -47,24 +46,24 @@ class Board
 
   def row_win?(token)
     game_board.any? do |array|
-      array.all? { |square| square == token }
+      array.all?(token)
     end
   end
 
   def col_win?(token)
     game_board.transpose.any? do |array|
-      array.all? { |square| square == token }
+      array.all?(token)
     end
   end
 
   def main_diagonal_win?(token)
     diagonal_map = game_board.map.with_index { |array, index| array[index] }
-    diagonal_map.all? { |square| square == token }
+    diagonal_map.all?(token)
   end
 
   def anti_diagonal_win?(token)
     diagonal_index = 3
     diagonal_map = game_board.map { |array| array[diagonal_index -= 1] }
-    diagonal_map.all? { |square| square == token }
+    diagonal_map.all?(token)
   end
 end
