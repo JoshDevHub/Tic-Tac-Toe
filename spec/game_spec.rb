@@ -3,8 +3,8 @@ require "./lib/game"
 describe Game do
   subject(:tic_tac_toe) { described_class.new(board:, player_two:, player_one:) }
 
-  let(:player_one) { instance_double(Player) }
-  let(:player_two) { instance_double(Player) }
+  let(:player_one) { instance_double(Player, token: "X") }
+  let(:player_two) { instance_double(Player, token: "O") }
   let(:board) { instance_double(Board, full_board?: false, win?: false) }
 
   describe "#over?" do
@@ -78,6 +78,21 @@ describe Game do
         expect { tic_tac_toe.swap_players }
           .to change(tic_tac_toe, :current_player).from(player_two).to(player_one)
       end
+    end
+  end
+
+  describe "#play_move" do
+    before do
+      allow(board).to receive(:place_token)
+    end
+
+    it "sends the `#place_token` message to the board with current player's token and given position" do
+      position = "7"
+      current_token = tic_tac_toe.current_player.token
+
+      tic_tac_toe.play_move(position)
+
+      expect(board).to have_received(:place_token).with(current_token, position)
     end
   end
 end

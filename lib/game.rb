@@ -15,6 +15,10 @@ class Game
     @board.win?("X") || @board.win?("O") || @board.full_board?
   end
 
+  def play_move(position)
+    @board.place_token(current_player.token, position)
+  end
+
   def winner
     if @board.win?("X")
       @player_one
