@@ -1,30 +1,36 @@
 require "./lib/game"
 
 describe Game do
-  subject(:tic_tac_toe) { described_class.new }
+  subject(:tic_tac_toe) { described_class.new(board:, player_two:, player_one:) }
 
-  describe "#play_game" do
-    context "when players play two games" do
-      before do
-        allow(tic_tac_toe).to receive(:game_over?).and_return(true)
-        allow(tic_tac_toe).to receive(:play_again?).and_return(true, false)
-      end
+  let(:player_one) { instance_double(Player) }
+  let(:player_two) { instance_double(Player) }
+  let(:board) { instance_double(Board, full_board?: false, win?: false) }
 
-      it "calls game_loop twice" do
-        expect(tic_tac_toe).to receive(:game_loop).twice
-        tic_tac_toe.play_game
+  describe "#over?" do
+    context "when the board returns false for full_board? and win?" do
+      it "is not over" do
+        expect(tic_tac_toe).not_to be_over
       end
     end
 
-    context "when players play five games" do
+    context "when the board returns true for a `#full_board?`" do
       before do
-        allow(tic_tac_toe).to receive(:game_over?).and_return(true)
-        allow(tic_tac_toe).to receive(:play_again?).and_return(true, true, true, true, false)
+        allow(board).to receive(:full_board?).and_return true
       end
 
-      it "calls game_loop five times" do
-        expect(tic_tac_toe).to receive(:game_loop).exactly(5).times
-        tic_tac_toe.play_game
+      it "is over" do
+        expect(tic_tac_toe).to be_over
+      end
+    end
+
+    context "when the board returns true for a `#win?`" do
+      before do
+        allow(board).to receive(:win?).and_return true
+      end
+
+      it "is over" do
+        expect(tic_tac_toe).to be_over
       end
     end
   end

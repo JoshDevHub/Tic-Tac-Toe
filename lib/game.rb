@@ -4,9 +4,14 @@ require_relative("board")
 class Game
   attr_reader :player_one, :player_two, :game_board
 
-  def initialize
-    @player_one = Player.new("X", "Player 1")
-    @player_two = Player.new("O", "Player 2")
+  def initialize(player_one:, player_two:, board:)
+    @player_one = player_one
+    @player_two = player_two
+    @board = board
+  end
+
+  def over?
+    @board.win?("X") || @board.win?("O") || @board.full_board?
   end
 
   def play_game
