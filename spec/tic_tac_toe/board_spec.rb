@@ -1,6 +1,6 @@
-require "./lib/board"
+require_relative "../../lib/tic_tac_toe"
 
-describe Board do
+describe TicTacToe::Board do
   describe "#full_board?" do
     subject(:playing_board) { described_class.new }
 

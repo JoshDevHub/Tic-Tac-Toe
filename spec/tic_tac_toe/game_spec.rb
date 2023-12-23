@@ -1,11 +1,11 @@
-require "./lib/game"
+require_relative "../../lib/tic_tac_toe"
 
-describe Game do
+describe TicTacToe::Game do
   subject(:tic_tac_toe) { described_class.new(board:, player_two:, player_one:) }
 
-  let(:player_one) { instance_double(Player, token: "X") }
-  let(:player_two) { instance_double(Player, token: "O") }
-  let(:board) { instance_double(Board, full_board?: false, win?: false) }
+  let(:player_one) { instance_double(TicTacToe::Player, token: "X") }
+  let(:player_two) { instance_double(TicTacToe::Player, token: "O") }
+  let(:board) { instance_double(TicTacToe::Board, full_board?: false, win?: false) }
 
   describe "#over?" do
     context "when the board returns false for full_board? and win?" do
