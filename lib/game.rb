@@ -11,6 +11,10 @@ class Game
     @current_player = player_one
   end
 
+  def board
+    @board.to_s
+  end
+
   def over?
     @board.win?("X") || @board.win?("O") || @board.full_board?
   end

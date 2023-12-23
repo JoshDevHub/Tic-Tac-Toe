@@ -95,4 +95,15 @@ describe Game do
       expect(board).to have_received(:place_token).with(current_token, position)
     end
   end
+
+  describe "#board" do
+    before do
+      allow(board).to receive(:to_s)
+    end
+
+    it "sends a `#to_s` message to the board" do
+      tic_tac_toe.board
+      expect(board).to have_received(:to_s)
+    end
+  end
 end

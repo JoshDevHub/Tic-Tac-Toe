@@ -7,15 +7,9 @@ class Board
 
   SYMBOLS = %w[X O].freeze
 
-  def print_board
-    separator = "---+---+---"
-    puts
-    puts get_row_string(0)
-    puts separator
-    puts get_row_string(1)
-    puts separator
-    puts get_row_string(2)
-    puts
+  def to_s
+    separator = "\n---+---+---\n"
+    (0..2).map { |idx| get_row_string(idx) }.join(separator)
   end
 
   def full_board?
