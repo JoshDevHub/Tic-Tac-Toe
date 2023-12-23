@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-require_relative("lib/game")
+require_relative("lib/tic_tac_toe")
 
-Game.new.play_game
+TicTacToe::CLI.new.run
