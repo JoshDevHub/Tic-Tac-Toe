@@ -1,7 +1,23 @@
-# Tic-Tac-Toe
+# Tic-Tac-Toe (with e2e tests)
 
-Play a game of tic-tac-toe on the command line.
+This is the `add-e2e-test` branch, which includes some ideas around code design and testing CLI apps that people may find useful. Specifically, this shows an approach for "end-to-end" (e2e) testing the CLI games in TOP's Ruby course.
 
-This was done as part of [The Odin Project](https://theodinproject.com).
+### Caveats
+- I tried to avoid touching much of the pre-existing code while making this. I did include a Gemfile with a couple of dev dependencies to get a developer experience more like what I'm used to, but other than that, I tried to avoid doing anything unrelated to the goal at hand -- which is getting to a point where I could write e2e test this app and then actually writing a couple of those tests.
+- This work is incomplete. An example is if you play the game and try entering an invalid space, the program will crash. I just wanted to get a demo out for e2e testing and find it difficult to justify dotting all the i's and crossing all the t's. I don't intend to make further progress on this.
 
-[View Live Preview on Replit](https://replit.com/@jmsmith1018/TicTacToe#README.md).
+### Notes
+
+#### A Change in Paradigm
+Objective number 1 is to separate all the procedural, game loop stuff from the domain models (objects). Previously, I approached this like the vast majority of learners in the curriculum do. There's a `Game` class that handles the game loop and IO mechanics. And if you look at that class, it's got a single public method to run the game. Various pieces of (important and underexposed) logic for driving the game loop are sprinkled throughout `private` methods. The game loop and IO processes are *procedural* in nature. Trying to shoehorn them into an object oriented design doesn't work well. It also feels impossible to test a class like my original `Game`.
+
+So I changed the `Game` to be a kind of wrapper around the other components (players and the board). It has the main high level API that the game loop will use (playing moves, checking for game over, etc.). Its tests can stay in a unit test lane, because it's been drained of all script methods. Then I created a new class called `CLI` which has a single method: `#run`. This method houses the game loop. I certainly could've avoided writing it as a class altogether, but having an initializer opens up some cool testing possibilities ...
+
+#### Injecting IO Dependencies
+So in the initializer for my `CLI` class, I pass in parameters for `stdin`, `stdout`, and `Kernel`. These all default to Ruby's internal definitions for those things, but passing them in like this allows me to change their definition in the tests. With `Kernel`, the goal is straightforward. I just want the tests to swallow my calls to `Kernel#system` so that the terminal output isn't cleaned up during my test runs. So I write a [simple double](https://github.com/JoshDevHub/Tic-Tac-Toe/blob/add-e2e-tests/spec/tic_tac_toe/cli_spec.rb#L12) that does nothing with a `#system` message.
+
+With `stdin` and `stdout` though, I'm doing something a bit more complicated. I'm leveraging a class builtin to Ruby's standard library called [`StringIO`](https://docs.ruby-lang.org/en/3.2/StringIO.html). `StringIO` objects are basically strings that implement all the IO methods (such as `puts`, `gets`, `print`, etc.). This allows us to have these objects stand in for normal `stdin`/`stdout` IO streams.
+
+For `stdin`, I write a little helper method called [`record_inputs`](https://github.com/JoshDevHub/Tic-Tac-Toe/blob/add-e2e-tests/spec/tic_tac_toe/cli_spec.rb#L1-L6). This method takes in a list of strings, writes them to a new `StringIO` instance, and returns the `StringIO` object. This allows me to pass a series of planned out inputs to this method and get back an object that has all of those inputs recorded. I pass this as the `stdin` to my CLI class. The first time `gets` is called in my CLI class, it will return the first input I passed to `record_inputs`. The second time, it'll return the second input I passed in, and so on. So now I can do something like [pass in a set of inputs I know should result in Player 1 winning the game](https://github.com/JoshDevHub/Tic-Tac-Toe/blob/add-e2e-tests/spec/tic_tac_toe/cli_spec.rb#L19). And then I can assert that's what happened.
+
+For `stdout`, I just make sure that the `CLI` `stdout` is writing to a [`StringIO` object](https://github.com/JoshDevHub/Tic-Tac-Toe/blob/add-e2e-tests/spec/tic_tac_toe/cli_spec.rb#L13). Every time `CLI` calls `puts` or `print`, it will write to my this object. Checking that certain substrings have appeared in the output is very convenient with this. You just call the `#string` method on the `StringIO` object and use the `include` matcher. I consider this far easier to work with and read compared to RSpec's terminal output matcher.
